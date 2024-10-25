@@ -10,7 +10,7 @@ from causallearn.graph.GeneralGraph import GeneralGraph
 from causallearn.graph.GraphNode import GraphNode
 from causallearn.utils.DAG2CPDAG import dag2cpdag
 from causallearn.utils.GESUtils import *
-from causallearn.utils.PDAG2DAG import pdag2dag
+from causallearn.utils.PDAG2DAG import pdag2dag, pdag2dag2
 
 
 from causallearn.graph.AdjacencyConfusion import AdjacencyConfusion
@@ -21,6 +21,7 @@ from causallearn.score.LocalScoreFunction import local_score_BIC
 from causallearn.utils.DAG2CPDAG import dag2cpdag
 from causallearn.utils.TXT2GeneralGraph import txt2generalgraph
 from math import log
+import pickle
 
 
 def ges(X: ndarray, score_func: str = 'local_score_BIC', maxP: Optional[float] = None,
@@ -195,9 +196,8 @@ def ges(X: ndarray, score_func: str = 'local_score_BIC', maxP: Optional[float] =
     # G = np.matlib.zeros((N, N)) # initialize the graph structure
     score = score_g(X, G, score_func, parameters)  # initialize the score
 
-    G = pdag2dag(G)
+    G, isValid = pdag2dag(G)
     G = dag2cpdag(G)
-
     p = 0
     weight_lambda = -100
 
@@ -319,15 +319,28 @@ def ges(X: ndarray, score_func: str = 'local_score_BIC', maxP: Optional[float] =
             #      break
             G = insert(G, min_desc[0], min_desc[1], min_desc[2])
             update1.append([min_desc[0], min_desc[1], min_desc[2]])
-            G = pdag2dag(G)
+            
+            G, isValid = pdag2dag(G)
+            print("second--------------------")
+            if isValid:
+                with open('variables.pkl', 'wb') as file:
+                    pickle.dump(G, file)
+            else:
+                with open('variables.pkl', 'rb') as file:
+                    G = pickle.load(file)
             G = dag2cpdag(G)
             G_step1.append(G)
 
         else:
             score_new = score #score_new = 100  #No change in performance occurs by keeping the score_new value fixed at 100
             #break
-            continue     
-                
+            continue
+    
+    #========================================================
+    with open('variables_G.pkl', 'wb') as file:
+        pickle.dump(G, file)
+    with open('variables_score.pkl', 'wb') as file:
+        pickle.dump(score, file)
 
     print('--------------Backward Search Starts-------------')
     count2 = 0
@@ -421,7 +434,7 @@ def ges(X: ndarray, score_func: str = 'local_score_BIC', maxP: Optional[float] =
                 break
             G = delete(G, min_desc[0], min_desc[1], min_desc[2])
             update2.append([min_desc[0], min_desc[1], min_desc[2]])
-            G = pdag2dag(G)
+            G = pdag2dag2(G)
             G = dag2cpdag(G)
             G_step2.append(G)
 

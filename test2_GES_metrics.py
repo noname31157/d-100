@@ -12,7 +12,8 @@ from causallearn.score.LocalScoreFunction import local_score_BIC
 #from causallearn.score.LocalScoreFunction import local_score_BIC_NEW
 from causallearn.utils.DAG2CPDAG import dag2cpdag
 from causallearn.utils.TXT2GeneralGraph import txt2generalgraph
-
+# import debugpy
+# debugpy.connect(('localhost', 5678))
 
 #data_path = "child.txt"
 #dataset = np.loadtxt(data_path, skiprows=1)

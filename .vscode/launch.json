@@ -2,14 +2,21 @@
     "version": "0.2.0",
     "configurations": [
 
-        
+
         {
             "name": "Python: Module",
             "type": "python",
-            "request": "launch",
-            "module": "test2_GES_metrics.${fileBasenameNoExtension}",
-            "console": "integratedTerminal",
-            "justMyCode": false
+            "request": "attach",
+            "listen": {
+                "host": "0.0.0.0",
+                "port": 5678
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}",
+                    "remoteRoot": "."
+                }
+            ]
         }
     ]
 }

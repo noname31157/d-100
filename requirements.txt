@@ -1,5 +1,4 @@
 causal-learn==0.1.2.8
-certifi @ file:///C:/b/abs_35d7n66oz9/croot/certifi_1707229248467/work/certifi
 colorama==0.4.5
 cycler==0.11.0
 fonttools==4.34.4
@@ -13,7 +12,6 @@ packaging==21.3
 pandas==1.4.3
 patsy==0.5.2
 Pillow==9.2.0
-pydot @ file:///C:/b/abs_2c8n5fzxpn/croot/pydot_1671046280781/work
 pyparsing==3.0.9
 python-dateutil==2.8.2
 pytz==2022.1

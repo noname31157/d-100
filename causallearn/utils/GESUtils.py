@@ -185,11 +185,16 @@ def insert_vc2_new(G, j, i, NAT, max_stack_size=25):
     stack = [(start, [])]
     sign = 1
     
+    counter = 1
     while stack:
         
-        if len(stack) > max_stack_size:
+        # if len(stack) > max_stack_size:
+        #     break
+        counter += 1
+
+        if counter >= 5000:
             break
-        
+
         current_node, path = stack.pop()
         path_set = set(path)
         

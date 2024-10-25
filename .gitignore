@@ -1,0 +1,11 @@
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+
+# Ignore node_modules directory
+node_modules/
+
+BICscore.csv
+
+# Ignore environment files
+.env
